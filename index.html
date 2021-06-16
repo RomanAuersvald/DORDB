@@ -52,14 +52,21 @@
 
             <h2>2. Slovní popis dodatečných integritních omezení</h2>
               <h3>2.1. Triviální integritiní omezení</h3>
-              
+              	<p>Tabulka Project - hodinová sazba musí být kladné číslo - > 0 </p>
+              	<p>Tabulka Project - každý záznam musí obsahovat vazbu na uživatele - FKEY userId, který záznam vytvořil </p>
+              	<p>Tabulka ProjectTask - název úlohy nesmí překročit 50 znaků </p>
+              	<p>Tabulka ProjectTask - krátký popis úlohy nesmí překročit 100 znaků </p>
+              	<p>Tabulka ProjectTask - dlouhý popis úlohy nesmí překročit 255 znaků </p>
               
               <h3>2.1. Netriviální integritní omezení</h3>
-              
-              
+              	<p>Tabulka TaskEntry - každý záznam musí obsahovat vazbu - FKEY na projekt, ke kterému patří.</p>
+              	<p>Tabulka Log - každý záznam musí obsahovat vazbu na uživatele - FKEY userId, který záznam vytvořil </p>
+              	
             <h2>3. Slovní návrh API rozhraní „business logiky“</h2>
-            
-                        
+            	<h3>3.1. Založení faktury</h3>
+            	<p>Vytvoření záznamu do tabulky Invoice - vložení aktuálního DATETIME pro pole created, uložení reference na: userId, clientId, projectId</p>
+              
+                <h3>3.2. Načtení klientovy adresy?</h3>
             <h2>4. Pět slovně formulovaných dotazů nad schématem</h2>
             
             
