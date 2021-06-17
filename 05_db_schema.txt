@@ -1,0 +1,180 @@
+CREATE TABLE Project (
+    projectId               NUMBER NOT NULL,
+    name                    VARCHAR(50),
+    shortDescription        VARCHAR(100),
+    longDescription         VARCHAR(255),
+    estimatedHours          NUMBER(5,2),
+    hourRate                NUMBER(10,2),
+    projectStart            DATE,
+    projectEnd              DATE,
+    ownerId                 NUMBER NOT NULL
+);
+
+ALTER TABLE Project ADD CONSTRAINT PK_Project
+	PRIMARY KEY (projectId)
+;
+
+CREATE TABLE ProjectTask (
+    projectTaskId           NUMBER NOT NULL,
+    taskName                VARCHAR(50),
+    shortDescription        VARCHAR(100),
+    longDescription         VARCHAR(255),
+    hourRate                NUMBER(10,2),
+    projectId               NUMBER NOT NULL,
+    completed               NUMBER(1,0)
+);
+
+ALTER TABLE ProjectTask ADD CONSTRAINT PK_ProjectTask
+	PRIMARY KEY (projectTaskId)
+;
+
+CREATE TABLE TaskEntry (
+    taskEntryId             NUMBER NOT NULL,
+    startDate               DATE,
+    endDate                 DATE,
+    projectTaskId           NUMBER NOT NULL
+);
+
+ALTER TABLE TaskEntry ADD CONSTRAINT PK_TaskEntry
+	PRIMARY KEY (taskEntryId)
+;
+
+CREATE TABLE InvoiceProjectTasks (
+    invoiceProjectTaskId    NUMBER NOT NULL,
+    invoiceId               NUMBER NOT NULL,
+    projectTaskId           NUMBER NOT NULL
+);
+
+ALTER TABLE InvoiceProjectTasks ADD CONSTRAINT PK_InvoiceProjectTask
+	PRIMARY KEY (invoiceProjectTaskId)
+;
+
+CREATE TABLE Invoice (
+    invoiceId               NUMBER NOT NULL,
+    created                 DATE,
+    dueBy                   DATE,
+    clientId                NUMBER NOT NULL,
+    projectId               NUMBER NOT NULL,
+    userId                  NUMBER NOT NULL
+);
+
+ALTER TABLE Invoice ADD CONSTRAINT PK_Invoice
+	PRIMARY KEY (invoiceId)
+;
+
+CREATE TABLE Address (
+    addressId               NUMBER NOT NULL,
+    street                  VARCHAR(80),
+    city                    VARCHAR(80),
+    postCode                NUMBER(5),
+    ownerId                 NUMBER NOT NULL
+);
+
+ALTER TABLE Address ADD CONSTRAINT PK_Address
+	PRIMARY KEY (addressId)
+;
+
+CREATE TABLE Client (
+    clientId                NUMBER NOT NULL,
+    firstName               VARCHAR(50),
+    lastName                VARCHAR(50),
+    companyName             VARCHAR(50),
+    ICO                     NUMBER(8),
+    DIC                     VARCHAR(10),
+    userId                  NUMBER NOT NULL
+);
+
+ALTER TABLE Client ADD CONSTRAINT PK_Client
+	PRIMARY KEY (clientId)
+;
+
+CREATE TABLE Log (
+    logId                   NUMBER NOT NULL,
+    notificationMessage     VARCHAR(100),
+    type                    NUMBER(1),
+    timestamp               DATE,
+    userId                  NUMBER NOT NULL
+);
+
+ALTER TABLE Log ADD CONSTRAINT PK_Log
+	PRIMARY KEY (logId)
+;
+
+CREATE TABLE Uzivatel (
+    uzivatelId              NUMBER NOT NULL,
+    firstName               VARCHAR(50),
+    lastName                VARCHAR(50),
+    password                VARCHAR(20),
+    username                VARCHAR(50),
+    addressId               NUMBER NOT NULL,
+    bankAccount             NUMBER NOT NULL
+);
+
+ALTER TABLE Uzivatel ADD CONSTRAINT PK_Uzivatel
+	PRIMARY KEY (uzivatelId)
+;
+
+CREATE TABLE BankAccount (
+    bankaccId               NUMBER NOT NULL,
+    accountNumber           NUMBER(10),
+    bankCode                NUMBER(4),
+    ownerId                 NUMBER NOT NULL
+);
+
+ALTER TABLE BankAccount ADD CONSTRAINT PK_BankAccount
+	PRIMARY KEY (bankaccId)
+;
+
+
+
+ALTER TABLE Project ADD CONSTRAINT FK_Project_OwnerId
+	FOREIGN KEY (ownerId) REFERENCES Uzivatel (uzivatelId)
+;
+
+ALTER TABLE ProjectTask ADD CONSTRAINT FK_ProjectTask_ProjectId
+	FOREIGN KEY (projectId) REFERENCES Project (projectId)
+;
+
+ALTER TABLE TaskEntry ADD CONSTRAINT FK__TaskEntry_ProjectTaskId
+	FOREIGN KEY (projectTaskId) REFERENCES ProjectTask (projectTaskId)
+;
+
+ALTER TABLE InvoiceProjectTasks ADD CONSTRAINT FK_InvoiceProjectTasks_ProjectTaskId
+	FOREIGN KEY (projectTaskId) REFERENCES ProjectTask (projectTaskId)
+;
+
+ALTER TABLE Invoice ADD CONSTRAINT FK_Invoice_ClientId
+	FOREIGN KEY (clientId) REFERENCES Client (clientId)
+;
+
+ALTER TABLE Invoice ADD CONSTRAINT FK_Invoice_ProjectId
+	FOREIGN KEY (projectId) REFERENCES Project (projectId)
+;
+
+ALTER TABLE Invoice ADD CONSTRAINT FK_Invoice_UserId
+	FOREIGN KEY (userId) REFERENCES Uzivatel (uzivatelId)
+;
+
+ALTER TABLE Address ADD CONSTRAINT FK_Address_OwnerId
+	FOREIGN KEY (ownerId) REFERENCES Uzivatel (uzivatelId)
+;
+
+ALTER TABLE Client ADD CONSTRAINT FK_Client_UserId
+	FOREIGN KEY (userId) REFERENCES Uzivatel (uzivatelId)
+;
+
+ALTER TABLE Log ADD CONSTRAINT FK_Log_UserId
+	FOREIGN KEY (userId) REFERENCES Uzivatel (uzivatelId)
+;
+
+ALTER TABLE Uzivatel ADD CONSTRAINT FK_Uzivatel_AddressId
+	FOREIGN KEY (addressId) REFERENCES Address (addressId)
+;
+
+ALTER TABLE Uzivatel ADD CONSTRAINT FK_Uzivatel_BankAccount
+	FOREIGN KEY (bankAccount) REFERENCES BankAccount (bankaccId)
+;
+
+ALTER TABLE BankAccount ADD CONSTRAINT FK_BankAccount_OwnerId
+	FOREIGN KEY (ownerId) REFERENCES Uzivatel (uzivatelId)
+;
