@@ -53,14 +53,11 @@
             <h2>2. Slovní popis dodatečných integritních omezení</h2>
               <h3>2.1. Triviální integritiní omezení</h3>
               	<p>Tabulka Project - hodinová sazba musí být kladné číslo - > 0 </p>
-              	<p>Tabulka Project - každý záznam musí obsahovat vazbu na uživatele - FKEY userId, který záznam vytvořil </p>
               	<p>Tabulka ProjectTask - název úlohy nesmí překročit 50 znaků </p>
-              	<p>Tabulka ProjectTask - krátký popis úlohy nesmí překročit 100 znaků </p>
-              	<p>Tabulka ProjectTask - dlouhý popis úlohy nesmí překročit 255 znaků </p>
+              	<p>Tabulka Project - výchozí hodnota pro hodinovou sazbu je 0</p>
               
-              <h3>2.1. Netriviální integritní omezení</h3>
-              	<p>Tabulka TaskEntry - každý záznam musí obsahovat vazbu - FKEY na projekt, ke kterému patří.</p>
-              	<p>Tabulka Log - každý záznam musí obsahovat vazbu na uživatele - FKEY userId, který záznam vytvořil </p>
+              <h3>2.2. Netriviální integritní omezení</h3>
+              	<p>Při vytvoření faktury pro projekt lze vybrat k fakturaci pouze dokončené úkoly. Nesmí být na výběr úkoly (Tasks), které nejsou ukončené.</p>
               	
             <h2>3. Slovní návrh API rozhraní „business logiky“</h2>
             	<h3>3.1. Založení faktury</h3>
@@ -73,7 +70,6 @@
             	<p>3. Ukončení rozpracované úlohy</p>
             	<p>4. Start nového záznamu práce pro projektovou úlohu</p>
             	<p>5. Součet celkové částky pro položky faktury</p>
-              
             
             
             <h2>5. Skript, který vytvoří databázové schéma odpovídající E-R diagramu</h2>
