@@ -1,0 +1,11 @@
+DROP TABLE Project;
+DROP TABLE ProjectTask;
+DROP TABLE TaskEntry;
+DROP TABLE InvoiceProjectTasks;
+DROP TABLE Invoice;
+DROP TABLE Address;
+DROP TABLE Client;
+DROP TABLE Log;
+DROP TABLE Uzivatel;
+DROP TABLE BankAccount;
+
