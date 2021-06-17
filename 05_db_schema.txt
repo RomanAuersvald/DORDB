@@ -1,0 +1,86 @@
+CREATE TABLE Project (
+    id                      NUMBER NOT NULL,
+    name                    VARCHAR(50),
+    shortDescription        VARCHAR(100),
+    longDescription         VARCHAR(255),
+    estimatedHours          NUMBER(5,2),
+    hourRate                NUMBER(10,2),
+    projectStart            DATE,
+    projectEnd              DATE,
+    ownerId                 NUMBER NOT NULL
+);
+
+CREATE TABLE ProjectTask (
+    id                      NUMBER NOT NULL,
+    taskName                VARCHAR(50),
+    shortDescription        VARCHAR(100),
+    longDescription         VARCHAR(255),
+    hourRate                NUMBER(10,2),
+    projectId               NUMBER NOT NULL,
+    taskEntries             NUMBER NOT NULL
+);
+
+CREATE TABLE TaskEntry (
+    id                      NUMBER NOT NULL,
+    startDate               DATE,
+    endDate                 DATE,
+    projectTaskId           NUMBER NOT NULL
+);
+
+CREATE TABLE InvoiceProjectTasks (
+    id                      NUMBER NOT NULL,
+    invoiceId               NUMBER NOT NULL,
+    projectTaskId           NUMBER NOT NULL
+);
+
+CREATE TABLE Invoice (
+    id                      NUMBER NOT NULL,
+    created                 DATE,
+    dueBy                   DATE,
+    clientId                NUMBER NOT NULL,
+    projectId               NUMBER NOT NULL,
+    userId                  NUMBER NOT NULL
+);
+
+CREATE TABLE Address (
+    id                      NUMBER NOT NULL,
+    street                  VARCHAR(80),
+    city                    VARCHAR(80),
+    postCode                NUMBER(5),
+    ownerId                 NUMBER NOT NULL
+);
+
+CREATE TABLE Client (
+    id                      NUMBER NOT NULL,
+    firstName               VARCHAR(50),
+    lastName                VARCHAR(50),
+    companyName             VARCHAR(50),
+    ICO                     NUMBER(8),
+    DIC                     VARCHAR(10),
+    userId                  NUMBER NOT NULL
+);
+
+CREATE TABLE Log (
+    id                      NUMBER NOT NULL,
+    notificationMessage     VARCHAR(100),
+    type                    NUMBER(1),
+    timestamp               DATE,
+    userId                  NUMBER NOT NULL
+);
+
+CREATE TABLE Uzivatel (
+    id                      NUMBER NOT NULL,
+    firstName               VARCHAR(50),
+    lastName                VARCHAR(50),
+    password                VARCHAR(20),
+    username                VARCHAR(50),
+    addressId               NUMBER NOT NULL,
+    bankAccount             NUMBER NOT NULL
+);
+
+CREATE TABLE BankAccount (
+    id                      NUMBER NOT NULL,
+    accountNumber           NUMBER(10),
+    bankCode                NUMBER(4),
+    ownerId                 NUMBER NOT NULL
+);

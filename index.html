@@ -45,35 +45,65 @@
         <div class="okraj">
             <h1>Reported - projekt DORDB</h1>
             
-            <p><strong>Autor:</strong> Bc.Roman Auersvald, Bc.Filip Roškot</p>
+            <p><strong>Autor:</strong> Auersvald Roman, Roškot Filip</p>
             
             <h2>1. E-R diagram</h2>
-				<p><a href="er_model.png"><img src="er_model.png" alt="er_model" title="er_model" width="600" /></a></p>
+            <p><a href="01_ER_model.png"><img src="01_ER_model.png" alt="er_diagram" title="er_diagram" width="600" /></a></p>
+
 
             <h2>2. Slovní popis dodatečných integritních omezení</h2>
               <h3>2.1. Triviální integritiní omezení</h3>
-              	<p>Tabulka Project - hodinová sazba musí být kladné číslo - > 0 </p>
-              	<p>Tabulka Project - každý záznam musí obsahovat vazbu na uživatele - FKEY userId, který záznam vytvořil </p>
-              	<p>Tabulka ProjectTask - název úlohy nesmí překročit 50 znaků </p>
-              	<p>Tabulka ProjectTask - krátký popis úlohy nesmí překročit 100 znaků </p>
-              	<p>Tabulka ProjectTask - dlouhý popis úlohy nesmí překročit 255 znaků </p>
-              
+                <p>
+                <ul>
+                    <li>
+                        <strong>Tabulka Project</strong>
+                        <ul>
+                            <li>hodinová sazba musí být kladné číslo - > 0</li>
+                            <li>každý záznam musí obsahovat vazbu na uživatele - FKEY userId, který záznam vytvořil</li>
+                        </ul>
+                </ul>
+                <ul>
+                    <li>
+                        <strong>Tabulka ProjectTask</strong>
+                        <ul>
+                            <li>název úlohy nesmí překročit 50 znaků</li>
+                            <li>krátký popis úlohy nesmí překročit 100 znaků</li>
+                            <li>dlouhý popis úlohy nesmí překročit 255 znaků</li>
+                        </ul>
+                </ul>
               <h3>2.1. Netriviální integritní omezení</h3>
-              	<p>Tabulka TaskEntry - každý záznam musí obsahovat vazbu - FKEY na projekt, ke kterému patří.</p>
-              	<p>Tabulka Log - každý záznam musí obsahovat vazbu na uživatele - FKEY userId, který záznam vytvořil </p>
-              	
+                <p>
+                    <ul>
+                        <li>
+                            <strong>Tabulka TaskEntry</strong>
+                            <ul>
+                                <li>každý záznam musí obsahovat vazbu - FKEY na projekt, ke kterému patří</li>
+                            </ul>
+                    </ul>
+                    <ul>
+                        <li>
+                            <strong>Tabulka Log</strong>
+                            <ul>
+                                <li>každý záznam musí obsahovat vazbu na uživatele - FKEY userId, který záznam vytvořil</li>
+                            </ul>
+            </ul>
+                </p>
+              
+              
             <h2>3. Slovní návrh API rozhraní „business logiky“</h2>
-            	<h3>3.1. Založení faktury</h3>
-            	<p>Vytvoření záznamu do tabulky Invoice - vložení aktuálního DATETIME pro pole created, uložení reference na: userId, clientId, projectId</p>
-              
-                <h3>3.2. Načtení klientovy adresy?</h3>
+                <h3>Vytvoření faktury</h3>
+                <p><strong>Název:</strong> create_invoice</p>
+                <p><strong>Parametry: clientID, projectID, userID</strong> </p>
+                <p><strong>Popis:</strong> Pocedura vytvoří nový záznam v tabulce Invoice. Faktura bude složena z pouze kompletních dílčích tasků daného projektu s projektovou sazbou. Vytvořena pro konkrétního klienta.</p>
+
+                <h3>Vytvoření klienta</h3>
+                <p><strong>Název:</strong> create_clientt</p>
+                <p><strong>Parametry:</strong> </p>
+                <p><strong>Popis:</strong> Procedura vytvoří nový záznam klienta v tabulce Client. Zaroveň vytvoří a přidělí adresu k nově vytvořenému klientovi v tabulce Address.</p>
+
+
             <h2>4. Pět slovně formulovaných dotazů nad schématem</h2>
-            	<p>1. Vypsání všech neukončených projektů pro konkrétního uživatele</p>
-            	<p>2. Vypsání všech projektových úloh pro konkrétní projekt</p>
-            	<p>3. Ukončení rozpracované úlohy</p>
-            	<p>4. Start nového záznamu práce pro projektovou úlohu</p>
-            	<p>5. Součet celkové částky pro položky faktury</p>
-              
+            
             
             
             <h2>5. Skript, který vytvoří databázové schéma odpovídající E-R diagramu</h2>
