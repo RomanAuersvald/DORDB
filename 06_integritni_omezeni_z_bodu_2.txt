@@ -5,7 +5,7 @@ ALTER TABLE Project ADD CONSTRAINT chk_hourRate CHECK (hourRate >= 0);
 
 
 -- Tabulka ProjectTask - Atribut name nesmí překročit délku 50 znaků.
-ALTER TABLE ProjectTask ADD CONSTRAINT chk_ProjectTaskName CHECK(LENGTH(name) =< 50);
+ALTER TABLE ProjectTask ADD CONSTRAINT chk_ProjectTaskName CHECK(LENGTH(name) =< 50); -- LEN()
 
 
 -- Tabulka Projekt - Výchozí hodnota pro hodinovou sazbu je 0.
@@ -15,20 +15,20 @@ ALTER TABLE Project MODIFY hourRate DEFAULT 0;
 -- Netrivialni integritni omezeni
 
 CREATE OR REPLACE PROCEDURE taskCompleted (taskid IN NUMBER) AS
-taskCompletedResult BOOLEAN;
+taskCompletedResult NUMBER(1,0);
 BEGIN
-	SELECT t.completed INTO taskCompletedResult FROM ProjectTask t WHERE (t.id == taskid);
-	IF (taskCompletedResult == FALSE) THEN
+	SELECT t.completed INTO taskCompletedResult FROM ProjectTask t WHERE (t.projectTaskId = taskid);
+	IF (taskCompletedResult = 0) THEN
 		RAISE_APPLICATION_ERROR(-2000, 'Nelze fakturovat nedokončený úkol!');
 	END IF;
 END;
 
 /
-CREATE OR REPLACE TRIGGER trig_chk_project_task_completed
+CREATE OR REPLACE TRIGGER trig_chk_project_tasks
 BEFORE INSERT
-ON InvoiceProjectTask
-FOR EACH ROW
+    ON InvoiceProjectTasks
+    FOR EACH ROW
 BEGIN
-taskCompleted(:NEW.projectTaskID);
+    taskCompleted(:NEW.projectTaskId);
 END;
 /

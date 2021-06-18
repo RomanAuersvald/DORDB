@@ -1,0 +1,21 @@
+CREATE OR REPLACE PACKAGE reported_api AS
+   PROCEDURE createInvoice ( dueBy IN DATE, clientId IN NUMBER, projectId IN NUMBER, userId IN NUMBER);
+   
+   PROCEDURE createClient ( firstName IN VARCHAR, lastName IN VARCHAR, companyName IN VARCHAR, ico IN NUMBER, dic IN NUMBER userId IN NUMBER);
+END reported_api;
+/
+
+CREATE OR REPLACE PACKAGE BODY letecka_spolecnost_api AS
+  PROCEDURE createInvoice ( dueBy IN DATE, clientId IN NUMBER, projectId IN NUMBER, userId IN NUMBER) AS
+    BEGIN
+    ALTER SESSION SET NLS_DATE_FORMAT = 'DD MM YYY';
+      INSERT INTO Invoice VALUES (seq_Invoice.nextval, SYSDATE, dueBy, clientId, projectId, userId);
+  END createInvoice;
+  
+   PROCEDURE createClient ( firstName IN VARCHAR, lastName IN VARCHAR, companyName IN VARCHAR, ico IN NUMBER, dic IN NUMBER userId IN NUMBER) AS
+       BEGIN
+      INSERT INTO Client VALUES (seq_ClientId.nextval, firstName, lastName, companyName, ico, dic, userId);
+  END createClient;
+  
+END reported_api;
+/
