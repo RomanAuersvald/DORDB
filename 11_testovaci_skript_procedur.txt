@@ -1,0 +1,23 @@
+-- 1. Vytvoření faktury
+
+SELECT * FROM Invoice WHERE invoiceId = (SELECT MAX(invoiceId) FROM Invoice) + 1;
+
+BEGIN
+  Reported_API.createInvoice(TO_DATE('23.06.2021', 'DD.MM.YYYY), 1, 1, 1);
+END;
+/
+
+SELECT * FROM Invoice WHERE invoiceId = (SELECT MAX(invoiceId) FROM Invoice);
+
+
+
+
+-- 2 Vytvoření klienta
+
+SELECT * FROM Client WHERE clientId = (SELECT MAX(clientId) FROM Client) + 1;
+BEGIN
+  Reported_API.createClient(TO_DATE('Karel', 'Nový'),'Karlova společnost',12345678,CZ12345678,1);
+END;
+/
+
+SELECT * FROM Client WHERE clientId = (SELECT MAX(clientId) FROM Client)
