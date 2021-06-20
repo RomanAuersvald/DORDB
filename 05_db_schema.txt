@@ -104,7 +104,7 @@ CREATE TABLE Uzivatel (
     uzivatelId              NUMBER NOT NULL,
     firstName               VARCHAR(50),
     lastName                VARCHAR(50),
-    password                VARCHAR(20),
+    password                VARCHAR(32),
     username                VARCHAR(50),
     addressId               NUMBER,
     bankAccountId           NUMBER
