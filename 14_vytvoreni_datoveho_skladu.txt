@@ -1,0 +1,83 @@
+CREATE TABLE DWProject (
+    dw_projectId            NUMBER NOT NULL,
+    name                    VARCHAR(50),
+    estimatedHours          NUMBER(5,2),
+    hourRate                NUMBER(10,2)
+);
+
+ALTER TABLE DWProject ADD CONSTRAINT PK_Project
+	PRIMARY KEY (dw_projectId)
+;
+
+CREATE TABLE DWInvoice (
+    dw_invoiceId            NUMBER NOT NULL,
+    created                 DATE,
+    dueBy                   DATE
+);
+
+ALTER TABLE DWInvoice ADD CONSTRAINT PK_Invoice
+	PRIMARY KEY (dw_invoiceId)
+;
+
+CREATE TABLE DWClient (
+    dw_clientId             NUMBER NOT NULL,
+    firstName               VARCHAR(50),
+    lastName                VARCHAR(50),
+    companyName             VARCHAR(50),
+    ICO                     NUMBER(8),
+    DIC                     VARCHAR(10),
+    accountNumber			NUMBER,
+    bankCode				NUMBER
+);
+
+ALTER TABLE DWClient ADD CONSTRAINT PK_Client
+	PRIMARY KEY (dw_clientId)
+;
+
+CREATE TABLE DWUser (
+    dw_userId               NUMBER NOT NULL,
+    firstName               VARCHAR(50),
+    lastName                VARCHAR(50),
+    accountNumber			NUMBER,
+    bankCode				NUMBER
+);
+
+ALTER TABLE DWUser ADD CONSTRAINT PK_Uzivatel
+	PRIMARY KEY (dw_userId)
+;
+
+CREATE TABLE DWFiscalYear (
+    dw_fiscalYearId         NUMBER NOT NULL,
+    start					DATE,
+    end						DATE
+);
+
+ALTER TABLE DWFiscalYear ADD CONSTRAINT PK_FiscalYear
+	PRIMARY KEY (dw_fiscalYearId)
+;
+
+CREATE TABLE DWInvoices (
+    totalPrice				NUMBER,
+    dw_fiscalYearId         NUMBER,
+    dw_userId               NUMBER,
+    dw_clientId             NUMBER,
+    dw_invoiceId            NUMBER,
+    dw_projectId            NUMBER
+);
+
+
+ALTER TABLE DWInvoices ADD CONSTRAINT FK_DWFiscalYearId
+	FOREIGN KEY (dw_fiscalYearId) REFERENCES DWFiscalYear (dw_fiscalYearId)
+;
+ALTER TABLE DWInvoices ADD CONSTRAINT FK_DWUserId
+	FOREIGN KEY (dw_userId) REFERENCES DWUser (dw_userId)
+;
+ALTER TABLE DWInvoices ADD CONSTRAINT FK_DWClientId
+	FOREIGN KEY (dw_clientId) REFERENCES DWClient (dw_clientId)
+;
+ALTER TABLE DWInvoices ADD CONSTRAINT FK_DWInvoiceId
+	FOREIGN KEY (dw_invoiceId) REFERENCES DWInvoice (dw_invoiceId)
+;
+ALTER TABLE DWInvoices ADD CONSTRAINT FK_DWProjectId
+	FOREIGN KEY (dw_projectId) REFERENCES DWProject (dw_projectId)
+;
