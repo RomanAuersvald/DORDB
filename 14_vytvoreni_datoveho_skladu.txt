@@ -5,7 +5,7 @@ CREATE TABLE DWProject (
     hourRate                NUMBER(10,2)
 );
 
-ALTER TABLE DWProject ADD CONSTRAINT PK_Project
+ALTER TABLE DWProject ADD CONSTRAINT PK_DWProject
 	PRIMARY KEY (dw_projectId)
 ;
 
@@ -15,7 +15,7 @@ CREATE TABLE DWInvoice (
     dueBy                   DATE
 );
 
-ALTER TABLE DWInvoice ADD CONSTRAINT PK_Invoice
+ALTER TABLE DWInvoice ADD CONSTRAINT PK_DWInvoice
 	PRIMARY KEY (dw_invoiceId)
 ;
 
@@ -30,7 +30,7 @@ CREATE TABLE DWClient (
     bankCode				NUMBER
 );
 
-ALTER TABLE DWClient ADD CONSTRAINT PK_Client
+ALTER TABLE DWClient ADD CONSTRAINT PK_DWClient
 	PRIMARY KEY (dw_clientId)
 ;
 
@@ -42,14 +42,14 @@ CREATE TABLE DWUser (
     bankCode				NUMBER
 );
 
-ALTER TABLE DWUser ADD CONSTRAINT PK_Uzivatel
+ALTER TABLE DWUser ADD CONSTRAINT PK_DWUser
 	PRIMARY KEY (dw_userId)
 ;
 
 CREATE TABLE DWFiscalYear (
     dw_fiscalYearId         NUMBER NOT NULL,
-    start					DATE,
-    end						DATE
+    yearStart					DATE,
+    yearEnd						DATE
 );
 
 ALTER TABLE DWFiscalYear ADD CONSTRAINT PK_FiscalYear
@@ -64,7 +64,6 @@ CREATE TABLE DWInvoices (
     dw_invoiceId            NUMBER,
     dw_projectId            NUMBER
 );
-
 
 ALTER TABLE DWInvoices ADD CONSTRAINT FK_DWFiscalYearId
 	FOREIGN KEY (dw_fiscalYearId) REFERENCES DWFiscalYear (dw_fiscalYearId)
