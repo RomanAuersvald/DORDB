@@ -1,0 +1,24 @@
+INSERT INTO DWFiscalYear (dw_fiscalYearId, start, end) VALUES (1, '1.1.2020', '1.1.2021');
+INSERT INTO DWFiscalYear (dw_fiscalYearId, start, end) VALUES (2, '1.1.2019', '1.1.2020');
+INSERT INTO DWFiscalYear (dw_fiscalYearId, start, end) VALUES (3, '1.1.2018', '1.1.2019');
+
+
+INSERT INTO DWProject (dw_projectId, name, estimatedHours, hourRate)
+SELECT Project.projectId, Project.name, Project.estimatedHours, Project.hourRate
+FROM Project;
+
+INSERT INTO DWInvoice (dw_invoiceId,created,dueBy)
+SELECT Invoice.invoiceId, Invoice.created, Invoice.dueBy
+FROM Invoice;
+
+INSERT INTO DWClient (dw_clientId,firstName,lastName, companyName, ICO, DIC, accountNumber, bankCode)
+SELECT Client.clientId, Client.firstName, Client.lastName, Client.companyName, Client.ico, Client.dic, BankAccount.accountNumber, BankAccount.bankCode
+FROM (Invoice JOIN Client ON clientId = clientId JOIN Uzivatel ON Uzivatel.uzivatelId = Client.userId JOIN BankAccount ON Uzivatel.uzivatelId = BankAccount.ownerId);
+
+INSERT INTO DWUser (dw_userId,firstName,lastName, accountNumber, bankCode)
+SELECT Uzivatel.uzivatelId, Uzivatel.firstName, Uzivatel.lastName, BankAccount.accountNumber, BankAccount.bankCode
+FROM (Uzivatel JOIN BankAccount ON Uzivatel.uzivatelId = BankAccount.ownerId);
+
+INSERT INTO DWInvoices (totalPrice, dw_fiscalYearId, dw_userId ,dw_clientId ,dw_invoiceId,dw_projectId)
+SELECT Invoice.totalAmount, (SELECT fy.fiskalYearId FROM DWFiscalYear fy WHERE (Invoice.created >= fy.start and Invoice.created <= fy.end)) ,Invoice.zakaznikId, Invoice.clientId, Invoice.invoiceId, Invoice.projectId
+FROM Invoice;

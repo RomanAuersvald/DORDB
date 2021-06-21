@@ -5,7 +5,7 @@ CREATE OR REPLACE PACKAGE reported_api AS
 END reported_api;
 /
 
-CREATE OR REPLACE PACKAGE BODY letecka_spolecnost_api AS
+CREATE OR REPLACE PACKAGE BODY reported_api AS
   PROCEDURE createInvoice ( dueBy IN DATE, clientId IN NUMBER, projectId IN NUMBER, userId IN NUMBER) AS
     BEGIN
     ALTER SESSION SET NLS_DATE_FORMAT = 'DD MM YYY';
