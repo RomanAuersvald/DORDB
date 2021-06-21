@@ -25,9 +25,7 @@ CREATE TABLE DWClient (
     lastName                VARCHAR(50),
     companyName             VARCHAR(50),
     ICO                     NUMBER(8),
-    DIC                     VARCHAR(10),
-    accountNumber			NUMBER,
-    bankCode				NUMBER
+    DIC                     VARCHAR(10)
 );
 
 ALTER TABLE DWClient ADD CONSTRAINT PK_DWClient
