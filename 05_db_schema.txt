@@ -67,7 +67,6 @@ CREATE TABLE Address (
     street                  VARCHAR(80),
     city                    VARCHAR(80),
     postCode                NUMBER(5),
-    ownerId                 NUMBER NOT NULL
 );
 
 ALTER TABLE Address ADD CONSTRAINT PK_Address
@@ -81,7 +80,8 @@ CREATE TABLE Client (
     companyName             VARCHAR(50),
     ICO                     NUMBER(8),
     DIC                     VARCHAR(10),
-    userId                  NUMBER NOT NULL
+    userId                  NUMBER NOT NULL,
+    addressId               NUMBER
 );
 
 ALTER TABLE Client ADD CONSTRAINT PK_Client
@@ -92,7 +92,7 @@ CREATE TABLE Log (
     logId                   NUMBER NOT NULL,
     notificationMessage     VARCHAR(100),
     type                    NUMBER(1),
-    timestamp               DATE,
+    timestamp               NUMBER(10),
     userId                  NUMBER NOT NULL
 );
 
@@ -139,7 +139,7 @@ ALTER TABLE TaskEntry ADD CONSTRAINT FK__TaskEntry_ProjectTaskId
 	FOREIGN KEY (projectTaskId) REFERENCES ProjectTask (projectTaskId)
 ;
 
-ALTER TABLE InvoiceProjectTasks ADD CONSTRAINT FK_InvoiceProjectTasks_ProjectTaskId
+ALTER TABLE InvoiceProjectTasks ADD CONSTRAINT FK_InvoProTasks_ProjectTaskId
 	FOREIGN KEY (projectTaskId) REFERENCES ProjectTask (projectTaskId)
 ;
 
@@ -155,12 +155,12 @@ ALTER TABLE Invoice ADD CONSTRAINT FK_Invoice_UserId
 	FOREIGN KEY (userId) REFERENCES Uzivatel (uzivatelId)
 ;
 
-ALTER TABLE Address ADD CONSTRAINT FK_Address_OwnerId
-	FOREIGN KEY (ownerId) REFERENCES Uzivatel (uzivatelId)
-;
-
 ALTER TABLE Client ADD CONSTRAINT FK_Client_UserId
 	FOREIGN KEY (userId) REFERENCES Uzivatel (uzivatelId)
+;
+
+ALTER TABLE Client ADD CONSTRAINT FK_Client_AddyId
+	FOREIGN KEY (addressId) REFERENCES Address (addressId)
 ;
 
 ALTER TABLE Log ADD CONSTRAINT FK_Log_UserId
