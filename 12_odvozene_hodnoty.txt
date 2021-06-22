@@ -1,19 +1,16 @@
 --select sum(pt.hourRate*(TO_DATE(te.endDate, 'DD.MM.YYYY') - TO_DATE(te.startDate, 'DD.MM.YYYY')) * 24) as invoiceTotal FROM TaskEntry te JOIN ProjectTask pt ON (te.projectTaskID = pt.projectTaskId) join InvoiceProjectTasks ipt on (pt.projectTaskId = ipt.projectTaskId) group by te.projectTaskId;
 
--- upraveni zabulky Invoice - OK
-ALTER TABLE Invoice ADD totalAmount NUMBER(38) DEFAULT 0;
-
 -- doplnění hodnoty pro stávající položky - OK
 BEGIN
   FOR record IN (SELECT invoiceId FROM Invoice)
   LOOP
-    UPDATE Invoice SET totalAmount = (select sum(pt.hourRate*(TO_DATE(te.endDate, 'DD.MM.YYYY') - TO_DATE(te.startDate, 'DD.MM.YYYY')) * 24) FROM TaskEntry te JOIN ProjectTask pt ON (te.projectTaskID = pt.projectTaskId) join InvoiceProjectTasks ipt on (pt.projectTaskId = ipt.projectTaskId) group by te.projectTaskId);
+    UPDATE Invoice SET totalAmount = (select sum(pt.hourRate*(TO_DATE(te.endDate, 'DD.MM.YYYY') - TO_DATE(te.startDate, 'DD.MM.YYYY')) * 24) 
+    FROM TaskEntry te JOIN ProjectTask pt ON (te.projectTaskID = pt.projectTaskId) join InvoiceProjectTasks ipt on (pt.projectTaskId = ipt.projectTaskId) 
+where ipt.invoiceprojecttaskid =  Invoice.invoiceid);
   END LOOP;
 END;
 /
 
-
--- zde chyby
 
 -- vytvoreni triggeru - jsou stejne, protoze se pocita celkova castka pro vsechny tasky
 CREATE OR REPLACE TRIGGER trig_task_insert
