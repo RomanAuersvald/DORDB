@@ -1,11 +1,36 @@
---Dotaz pro získání průměrné fakturované částky pro uživatele za předešlé fiskální roky. - otestovat
+set autotrace on;
+--Dotaz pro zĂ­skĂĄnĂ­ prĹŻmÄrnĂŠ fakturovanĂŠ ÄĂĄstky pro uĹživatele za pĹedeĹĄlĂŠ fiskĂĄlnĂ­ roky.
 SELECT dwuser.dw_userid, concat(dwuser.firstname, dwuser.lastname) as jmeno, avg(dwinvoices.totalprice) AS AVGAmount, dwfiscalyear.dw_fiscalyearid
 FROM DWUser inner join DWInvoices on DWInvoices.dw_userId  = DWUser.dw_userId inner join DWFiscalYear on DWFiscalYear.dw_fiscalYearId = DWInvoices.dw_fiscalYearId inner join DWInvoice on DWInvoices.dw_invoiceId = DWInvoice.dw_invoiceId
 GROUP BY dwuser.dw_userid, DWFiscalYear.dw_fiscalYearId, concat(dwuser.firstname, dwuser.lastname);
 
 
---Dotaz pro získání 3 nejčastějších klientů pro uživatele za poslední fiskální rok. - otestovat
-select concat(dwuser.firstname, dwuser.lastname) as jmeno, DWClient.companyname as Client, dwuser.dw_userid, count(dwclient.dw_clientId) as Contracts, max(dwfiscalyear.dw_fiscalyearId) as lastYearID
-from DWInvoices inner join dwuser on dwuser.dw_userId = DWInvoices.dw_userId inner join DWClient on DWInvoices.dw_clientId = dwclient.dw_clientId inner join dwfiscalyear on dwfiscalyear.dw_fiscalyearId = dwinvoices.dw_fiscalyearId
-where dwfiscalyear.dw_fiscalyearId = 4 and rownum <= 4
-GROUP BY dwuser.dw_userid, DWClient.companyname, concat(dwuser.firstname, dwuser.lastname) order by count(dwclient.dw_clientId);
+--Dotaz pro ziskani 3 uzivatelu s nejvice fakturami za posledni fiskalni rok. - je jeden - neni tolik vygenerovanych faktur
+select concat(dwuser.firstname, dwuser.lastname) as jmenoUzivatele, count(dwinvoices.dw_userid) as Invoices
+from DWInvoices  join dwuser on dwuser.dw_userId = DWInvoices.dw_userId  join dwfiscalyear on dwfiscalyear.dw_fiscalyearId = dwinvoices.dw_fiscalyearId
+where dwfiscalyear.dw_fiscalyearId = (select max(dw_fiscalyearid) from DWfiscalyear) and rownum <= 3
+GROUP BY concat(dwuser.firstname, dwuser.lastname) order by count(dwinvoices.dw_userid);
+set autotrace off;
+
+Autotrace Enabled
+Shows the execution plan as well as statistics of the statement.
+
+ DW_USERID JMENO                                                                                                 AVGAMOUNT DW_FISCALYEARID
+---------- ---------------------------------------------------------------------------------------------------- ---------- ---------------
+         3 AnnaTáborská                                                                                         13731774,5               2
+         1 JindřichTrávníček                                                                                       9876554               3
+         5 TomášVolf                                                                                              17444088               4
+         4 EmilRosík                                                                                              10664781               3
+         7 MiloslavTokar                                                                                           6284900               3
+         8 AlešTrnka                                                                                              14558524               2
+         5 TomášVolf                                                                                               6586920               2
+         6 OlgaStehlíková                                                                                                                3
+
+8 rows selected. 
+
+
+JMENOUZIVATELE                                                                                         INVOICES
+---------------------------------------------------------------------------------------------------- ----------
+TomášVolf                                                                                                     1
+
+Autotrace Disabled
