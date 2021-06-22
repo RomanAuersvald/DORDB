@@ -1,0 +1,18 @@
+no rows selected
+
+PL/SQL procedure successfully completed.
+
+
+ INVOICEID CREATED   DUEBY       CLIENTID  PROJECTID     USERID
+---------- --------- --------- ---------- ---------- ----------
+         3 22 06 021 23 06 021          1          1          1
+
+no rows selected
+
+PL/SQL procedure successfully completed.
+
+
+  CLIENTID FIRSTNAME                                          LASTNAME                                           COMPANYNAME                                               ICO DIC            USERID  ADDRESSID
+---------- -------------------------------------------------- -------------------------------------------------- -------------------------------------------------- ---------- ---------- ---------- ----------
+      1957 Karel                                              Nový                                               Karlova společnost                                   12345678 CZ12345678          1          1
+

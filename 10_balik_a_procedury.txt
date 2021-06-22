@@ -1,21 +1,22 @@
+ALTER SESSION SET NLS_DATE_FORMAT = 'DD MM YYY';
+/
+
 CREATE OR REPLACE PACKAGE reported_api AS
    PROCEDURE createInvoice ( dueBy IN DATE, clientId IN NUMBER, projectId IN NUMBER, userId IN NUMBER);
    
-   PROCEDURE createClient ( firstName IN VARCHAR, lastName IN VARCHAR, companyName IN VARCHAR, ico IN NUMBER, dic IN NUMBER userId IN NUMBER);
+   PROCEDURE createClient ( firstName IN VARCHAR, lastName IN VARCHAR, companyName IN VARCHAR, ico IN NUMBER, dic IN NUMBER, userId IN NUMBER, addressId IN NUMBER);
 END reported_api;
 /
-
 CREATE OR REPLACE PACKAGE BODY reported_api AS
   PROCEDURE createInvoice ( dueBy IN DATE, clientId IN NUMBER, projectId IN NUMBER, userId IN NUMBER) AS
-    BEGIN
-    ALTER SESSION SET NLS_DATE_FORMAT = 'DD MM YYY';
-      INSERT INTO Invoice VALUES (seq_Invoice.nextval, SYSDATE, dueBy, clientId, projectId, userId);
-  END createInvoice;
+BEGIN
+      INSERT INTO Invoice VALUES (invoice_id_seq.nextval, SYSDATE, dueBy, clientId, projectId, userId);
+END createInvoice;
   
-   PROCEDURE createClient ( firstName IN VARCHAR, lastName IN VARCHAR, companyName IN VARCHAR, ico IN NUMBER, dic IN NUMBER userId IN NUMBER) AS
-       BEGIN
-      INSERT INTO Client VALUES (seq_ClientId.nextval, firstName, lastName, companyName, ico, dic, userId);
-  END createClient;
+   PROCEDURE createClient ( firstName IN VARCHAR, lastName IN VARCHAR, companyName IN VARCHAR, ico IN NUMBER, dic IN NUMBER, userId IN NUMBER, addressId IN NUMBER) AS
+    BEGIN
+      INSERT INTO Client VALUES (client_id_seq.nextval, firstName, lastName, companyName, ico, dic, userId, addressId);
+    END createClient;
   
 END reported_api;
 /

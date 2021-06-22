@@ -1,0 +1,112 @@
+Autotrace Enabled
+Shows the execution plan as well as statistics of the statement.
+
+Error starting at line : 5 in command -
+insert into Project(projectId, name,shortDescription, longDescription, estimatedHours, hourRate,projectStart, projectEnd, ownerId) values (project_id_seq_seq.nextval, 'test', 'testdesc', 'testdesc', 0,-50,null, null,  1)
+Error report -
+ORA-02290: kontrolní omezení (DOAUERSRO1.CHK_HOURRATE) porušeno
+
+
+Error starting at line : 8 in command -
+insert into ProjectTask(projectTaskId, taskName, shortDescription, longDescription, hourRate, projectId, completed) VALUES (projecttask_id_seq.nextval, 'asdrvpstnotnvksjrlvjdovjelcjdlgncjdmvidcjemvjfncjdmcd', '', '', 0, 1, 0)
+Error report -
+ORA-12899: hodnota je příliš velká pro sloupec "DOAUERSRO1"."PROJECTTASK"."TASKNAME" (skutečná: 53, maximální: 50)
+
+
+1 row inserted.
+
+Explain Plan
+-----------------------------------------------------------
+
+PLAN_TABLE_OUTPUT                                                                                                                                                                                                                                                                                           
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Plan hash value: 1784877838
+ 
+---------------------------------------------------------------------------------------
+| Id  | Operation                | Name               | Rows  | Cost (%CPU)| Time     |
+---------------------------------------------------------------------------------------
+|   0 | INSERT STATEMENT         |                    |     1 |     1   (0)| 00:00:01 |
+|   1 |  LOAD TABLE CONVENTIONAL | PROJECT            |       |            |          |
+|   2 |   SEQUENCE               | PROJECT_ID_SEQ_SEQ |       |            |          |
+---------------------------------------------------------------------------------------
+
+Unable to gather statistics please ensure user has correct access.
+The statistic feature requires that the user is granted select on v_$sesstat, v_$statname and v_$session.
+
+1 row inserted.
+
+Explain Plan
+-----------------------------------------------------------
+
+PLAN_TABLE_OUTPUT                                                                                                                                                                                                                                                                                           
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Plan hash value: 1784877838
+ 
+---------------------------------------------------------------------------------------
+| Id  | Operation                | Name               | Rows  | Cost (%CPU)| Time     |
+---------------------------------------------------------------------------------------
+|   0 | INSERT STATEMENT         |                    |     1 |     1   (0)| 00:00:01 |
+|   1 |  LOAD TABLE CONVENTIONAL | PROJECT            |       |            |          |
+|   2 |   SEQUENCE               | PROJECT_ID_SEQ_SEQ |       |            |          |
+---------------------------------------------------------------------------------------
+
+Unable to gather statistics please ensure user has correct access.
+The statistic feature requires that the user is granted select on v_$sesstat, v_$statname and v_$session.
+
+1 row updated.
+
+1 row inserted.
+
+Explain Plan
+-----------------------------------------------------------
+
+PLAN_TABLE_OUTPUT                                                                                                                                                                                                                                                                                           
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 
+------------------------------------------------------------------------------------
+| Id  | Operation                | Name    | Rows  | Bytes | Cost (%CPU)| Time     |
+------------------------------------------------------------------------------------
+|   0 | INSERT STATEMENT         |         |     1 |    36 |     1   (0)| 00:00:01 |
+|   1 |  LOAD TABLE CONVENTIONAL | PROJECT |       |       |            |          |
+------------------------------------------------------------------------------------
+
+Unable to gather statistics please ensure user has correct access.
+The statistic feature requires that the user is granted select on v_$sesstat, v_$statname and v_$session.
+
+1 row updated.
+
+Explain Plan
+-----------------------------------------------------------
+
+PLAN_TABLE_OUTPUT                                                                                                                                                                                                                                                                                           
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Plan hash value: 2524622476
+ 
+-------------------------------------------------------------------------------------
+| Id  | Operation          | Name           | Rows  | Bytes | Cost (%CPU)| Time     |
+-------------------------------------------------------------------------------------
+|   0 | UPDATE STATEMENT   |                |     1 |     6 |     1   (0)| 00:00:01 |
+|   1 |  UPDATE            | PROJECTTASK    |       |       |            |          |
+|*  2 |   INDEX UNIQUE SCAN| PK_PROJECTTASK |     1 |     6 |     0   (0)| 00:00:01 |
+-------------------------------------------------------------------------------------
+ 
+Predicate Information (identified by operation id):
+
+PLAN_TABLE_OUTPUT                                                                                                                                                                                                                                                                                           
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------
+ 
+   2 - access("PROJECTTASKID"=1)
+
+Unable to gather statistics please ensure user has correct access.
+The statistic feature requires that the user is granted select on v_$sesstat, v_$statname and v_$session.
+
+Error starting at line : 403 in command -
+insert into InvoiceProjectTasks(invoiceProjectTaskId, invoiceId, projectTaskId) values (1, 1, 1)
+Error report -
+ORA-20340: Nelze fakturovat nedokonÄenĂ˝ Ăşkol!
+ORA-06512: na "DOAUERSRO1.TASKCOMPLETED", line 6
+ORA-06512: na "DOAUERSRO1.TRIG_CHK_PROJECT_TASKS", line 2
+ORA-04088: chyba během provádění triggeru 'DOAUERSRO1.TRIG_CHK_PROJECT_TASKS'
+
+Autotrace Disabled

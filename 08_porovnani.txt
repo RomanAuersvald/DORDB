@@ -1,0 +1,75 @@
+Autotrace Enabled
+Shows the execution plan as well as statistics of the statement.
+
+INVOICETOTAL
+------------
+            
+
+Explain Plan
+-----------------------------------------------------------
+
+PLAN_TABLE_OUTPUT                                                                                                                                                                                                                                                                                           
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Plan hash value: 2959758316
+ 
+-----------------------------------------------------------------------------------------------------
+| Id  | Operation                     | Name                | Rows  | Bytes | Cost (%CPU)| Time     |
+-----------------------------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT              |                     |     1 |    70 |     5   (0)| 00:00:01 |
+|   1 |  SORT AGGREGATE               |                     |     1 |    70 |            |          |
+|   2 |   NESTED LOOPS                |                     |       |       |            |          |
+|   3 |    NESTED LOOPS               |                     |     1 |    70 |     5   (0)| 00:00:01 |
+|   4 |     MERGE JOIN CARTESIAN      |                     |     1 |    44 |     5   (0)| 00:00:01 |
+|   5 |      TABLE ACCESS FULL        | TASKENTRY           |     1 |    31 |     3   (0)| 00:00:01 |
+
+PLAN_TABLE_OUTPUT                                                                                                                                                                                                                                                                                           
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|   6 |      BUFFER SORT              |                     |     1 |    13 |     2   (0)| 00:00:01 |
+|   7 |       TABLE ACCESS FULL       | INVOICEPROJECTTASKS |     1 |    13 |     2   (0)| 00:00:01 |
+|*  8 |     INDEX UNIQUE SCAN         | PK_PROJECTTASK      |     1 |       |     0   (0)| 00:00:01 |
+|   9 |    TABLE ACCESS BY INDEX ROWID| PROJECTTASK         |     1 |    26 |     0   (0)| 00:00:01 |
+-----------------------------------------------------------------------------------------------------
+ 
+Predicate Information (identified by operation id):
+---------------------------------------------------
+ 
+   8 - access("PT"."PROJECTTASKID"="TE"."PROJECTTASKID")
+       filter("PT"."PROJECTTASKID"="IPT"."PROJECTTASKID")
+
+Unable to gather statistics please ensure user has correct access.
+The statistic feature requires that the user is granted select on v_$sesstat, v_$statname and v_$session.
+no rows selected
+Explain Plan
+-----------------------------------------------------------
+
+PLAN_TABLE_OUTPUT                                                                                                                                                                                                                                                                                           
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Plan hash value: 726565332
+ 
+-----------------------------------------------------------------------------------------------------
+| Id  | Operation                     | Name                | Rows  | Bytes | Cost (%CPU)| Time     |
+-----------------------------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT              |                     |     1 |    70 |     6  (17)| 00:00:01 |
+|   1 |  HASH GROUP BY                |                     |     1 |    70 |     6  (17)| 00:00:01 |
+|   2 |   NESTED LOOPS                |                     |       |       |            |          |
+|   3 |    NESTED LOOPS               |                     |     1 |    70 |     5   (0)| 00:00:01 |
+|   4 |     MERGE JOIN CARTESIAN      |                     |     1 |    44 |     5   (0)| 00:00:01 |
+|   5 |      TABLE ACCESS FULL        | TASKENTRY           |     1 |    31 |     3   (0)| 00:00:01 |
+
+PLAN_TABLE_OUTPUT                                                                                                                                                                                                                                                                                           
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|   6 |      BUFFER SORT              |                     |     1 |    13 |     2   (0)| 00:00:01 |
+|   7 |       TABLE ACCESS FULL       | INVOICEPROJECTTASKS |     1 |    13 |     2   (0)| 00:00:01 |
+|*  8 |     INDEX UNIQUE SCAN         | PK_PROJECTTASK      |     1 |       |     0   (0)| 00:00:01 |
+|   9 |    TABLE ACCESS BY INDEX ROWID| PROJECTTASK         |     1 |    26 |     0   (0)| 00:00:01 |
+-----------------------------------------------------------------------------------------------------
+ 
+Predicate Information (identified by operation id):
+---------------------------------------------------
+ 
+   8 - access("TE"."PROJECTTASKID"="PT"."PROJECTTASKID")
+       filter("PT"."PROJECTTASKID"="IPT"."PROJECTTASKID")
+
+Unable to gather statistics please ensure user has correct access.
+The statistic feature requires that the user is granted select on v_$sesstat, v_$statname and v_$session.
+Autotrace Disabled

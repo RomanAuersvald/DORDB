@@ -1,7 +1,7 @@
 Triviální omezení
 !!!!!!!!!!!! id na seq!!
 Tabulka Project - hodinová sazba musí být kladné číslo - > 0
-
+SET AUTOTRACE ON;
 insert into Project(projectId, name,shortDescription, longDescription, estimatedHours, hourRate,projectStart, projectEnd, ownerId) values (5, 'test', 'testdesc', 'testdesc', 0,-50,null, null,  1);
 
 Tabulka ProjectTask - název úlohy nesmí překročit 50 znaků
@@ -18,3 +18,4 @@ insert into Project(projectId, name,shortDescription, longDescription, estimated
 
 update ProjectTask set completed = 0 where projectTaskId = 1;
 insert into InvoiceProjectTasks(invoiceProjectTaskId, invoiceId, projectTaskId) values (1, 1, 1); -- 1 je ID nedokončené úlohy, spoléháme na existující invoice s ID 1
+SET AUTOTRACE OFF;
