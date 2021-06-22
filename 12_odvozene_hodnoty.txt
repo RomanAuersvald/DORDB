@@ -51,4 +51,3 @@ select sum(:NEW.hourRate*(TO_DATE(te.endDate, 'DD.MM.YYYY') - TO_DATE(te.startDa
   UPDATE Invoice i SET totalAmount = total  WHERE i.projectId = :NEW.projectId;
 END;
 /
-/
