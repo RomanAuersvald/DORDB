@@ -5,7 +5,7 @@ ALTER TABLE Project ADD CONSTRAINT chk_hourRate CHECK (hourRate >= 0);
 
 
 -- Tabulka ProjectTask - Atribut name nesmí překročit délku 50 znaků.
-ALTER TABLE ProjectTask ADD CONSTRAINT chk_ProjectTaskName CHECK(LENGTH(name) =< 50); -- LEN()
+ALTER TABLE ProjectTask ADD CONSTRAINT chk_ProjectTaskName CHECK(LENGTH(name) <= 50); -- LEN()
 
 
 -- Tabulka Projekt - Výchozí hodnota pro hodinovou sazbu je 0.
