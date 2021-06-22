@@ -1,5 +1,5 @@
 set autotrace on;
---Dotaz pro zĂ­skĂĄnĂ­ prĹŻmÄrnĂŠ fakturovanĂŠ ÄĂĄstky pro uĹživatele za pĹedeĹĄlĂŠ fiskĂĄlnĂ­ roky.
+--Dotaz pro získání průměrné fakturované částky pro uživatele za předešlé fiskální roky.
 SELECT dwuser.dw_userid, concat(dwuser.firstname, dwuser.lastname) as jmeno, avg(dwinvoices.totalprice) AS AVGAmount, dwfiscalyear.dw_fiscalyearid
 FROM DWUser inner join DWInvoices on DWInvoices.dw_userId  = DWUser.dw_userId inner join DWFiscalYear on DWFiscalYear.dw_fiscalYearId = DWInvoices.dw_fiscalYearId inner join DWInvoice on DWInvoices.dw_invoiceId = DWInvoice.dw_invoiceId
 GROUP BY dwuser.dw_userid, DWFiscalYear.dw_fiscalYearId, concat(dwuser.firstname, dwuser.lastname);
