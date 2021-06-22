@@ -27,3 +27,9 @@ DROP TABLE DWClient;
 DROP TABLE DWUser;
 DROP TABLE DWFiscalYear;
 DROP TABLE DWInvoices;
+
+DROP PROCEDURE taskCompleted;
+DROP TRIGGER trig_chk_project_tasks;
+DROP TRIGGER trig_task_insert;
+DROP TRIGGER trig_task_delete;
+DROP TRIGGER trig_task_update;
