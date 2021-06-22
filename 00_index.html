@@ -77,19 +77,14 @@
 
     <h2>3. Slovní návrh API rozhraní „business logiky“</h2>
     <h3>3.1. Založení faktury</h3>
-    <p><strong>Název:</strong></p>
-    <p><strong>Parametry:</strong></p>
+    <p><strong>Název:</strong> createInvoice</p>
+    <p><strong>Parametry:</strong> dueBy, clientId, projectId, userId</p>
     <p><strong>Popis:</strong> Vytvoření záznamu do tabulky Invoice - vložení aktuálního DATETIME pro pole created, uložení reference na: userId, clientId, projectId</p>
 
     <h3>3.2. Vytvoření nového klienta</h3>
-    <p><strong>Název:</strong> </p>
-    <p><strong>Parametry:</strong> </p>
+    <p><strong>Název:</strong> createClient</p>
+    <p><strong>Parametry:</strong> firstName, lastName, companyName, ico, dic, userId, addressId</p>
     <p><strong>Popis:</strong> Vytvoření záznamu do tabulky Client - přiřazení firstName, lastname, companyName, ico, dic a uložení reference na uživatele, pod kterého klient spadá.</p>
-
-    <h3>3.3. Načtení klientovy adresy</h3>
-    <p><strong>Název:</strong> </p>
-    <p><strong>Parametry:</strong> </p>
-    <p><strong>Popis:</strong> </p>
 
     <h2>4. Pět slovně formulovaných dotazů nad schématem</h2>
     <ol>
@@ -118,7 +113,7 @@
     <h2>11. Testovací skript (včetně výstupu spool obdrženého po spuštění) pro obě procedury, včetně souvisejících dotazů, které ověří, že každá procedura provedla to co měla</h2>
     <p><strong>Skript:</strong> <a href="11_testovaci_skript_procedur.txt">11_testovaci_skript_procedur.txt</a></p>
     <p><strong>Výstupy:</strong> <a href="11_vystup.txt">11_vystup.txt</a></p>
-    <h2>12. Skript, který doplní do zvolené tabulky schématu sloupec, který bude obsahovat odvozené hodnoty (průměrný plat zaměstnance v rámci oddělní apod.) – tyto hodnoty budou automaticky aktualizovány pomocí triggerů</h2>
+    <h2>12. Skript, který doplní do zvolené tabulky schématu sloupec, který bude obsahovat odvozené hodnoty – tyto hodnoty budou automaticky aktualizovány pomocí triggerů</h2>
     <p><strong>Skript:</strong> <a href="12_odvozene_hodnoty.txt">12_odvozene_hodnoty.txt</a></p>
     <h2>13. Navrhněte fakta a dimenze (E-R diagram) pro datový sklad vycházející z vaší databáze. Přidejte i časovou dimenzi.</h2>
     <p><a href="13_er-warehouse.png"><img src="13_er-warehouse.png" alt="er-warehouse.png" title="er-warehouse.png" width="600" /></a></p>
