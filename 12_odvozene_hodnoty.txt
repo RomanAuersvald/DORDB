@@ -10,41 +10,43 @@ where ipt.invoiceprojecttaskid =  Invoice.invoiceid);
   END LOOP;
 END;
 /
-
-
 -- vytvoreni triggeru - jsou stejne, protoze se pocita celkova castka pro vsechny tasky
 CREATE OR REPLACE TRIGGER trig_task_insert
 AFTER insert
-ON ProjectTask
+ON InvoiceProjectTasks
 FOR EACH ROW
 DECLARE
 total NUMBER(38);
 BEGIN
-select sum(:NEW.hourRate*(TO_DATE(te.endDate, 'DD.MM.YYYY') - TO_DATE(te.startDate, 'DD.MM.YYYY')) * 24) INTO total FROM TaskEntry te join InvoiceProjectTasks ipt on (te.projectTaskId = ipt.projectTaskId) group by te.projectTaskId;
-  UPDATE Invoice i SET totalAmount = total  WHERE i.projectId = :NEW.projectId;
+select sum(p.hourRate*(TO_DATE(te.endDate, 'DD.MM.YYYY') - TO_DATE(te.startDate, 'DD.MM.YYYY')) * 24) INTO total FROM TaskEntry te join ProjectTask pt on te.projecttaskid = pt.projecttaskid join Project p on (p.projectid = pt.projectid) where te.projectTaskId = :NEW.projectTaskId;
+  UPDATE Invoice i SET totalAmount = total  WHERE i.invoiceid = :NEW.invoiceid;
 END;
 /
+--insert into InvoiceProjectTasks(invoiceprojecttaskid, invoiceid, projecttaskid) values (invoiceprojecttasks_id_seq.nextval, 1, 68);
+
+
+
 
 CREATE OR REPLACE TRIGGER trig_task_delete
 AFTER delete
-ON ProjectTask
+ON InvoiceProjectTasks
 FOR EACH ROW
 DECLARE
 total NUMBER(38);
 BEGIN
-select sum(:NEW.hourRate*(TO_DATE(te.endDate, 'DD.MM.YYYY') - TO_DATE(te.startDate, 'DD.MM.YYYY')) * 24) INTO total FROM TaskEntry te join InvoiceProjectTasks ipt on (te.projectTaskId = ipt.projectTaskId) group by te.projectTaskId;
-  UPDATE Invoice i SET totalAmount = total  WHERE i.projectId = :NEW.projectId;
+select sum(p.hourRate*(TO_DATE(te.endDate, 'DD.MM.YYYY') - TO_DATE(te.startDate, 'DD.MM.YYYY')) * 24) INTO total FROM TaskEntry te join ProjectTask pt on te.projecttaskid = pt.projecttaskid join Project p on (p.projectid = pt.projectid) where te.projectTaskId = :NEW.projectTaskId;
+  UPDATE Invoice i SET totalAmount = total  WHERE i.invoiceid = :NEW.invoiceid;
 END;
 /
 
 CREATE OR REPLACE TRIGGER trig_task_update
 AFTER update
-ON ProjectTask
+ON InvoiceProjectTasks
 FOR EACH ROW
 DECLARE
 total NUMBER(38);
 BEGIN
-select sum(:NEW.hourRate*(TO_DATE(te.endDate, 'DD.MM.YYYY') - TO_DATE(te.startDate, 'DD.MM.YYYY')) * 24) INTO total FROM TaskEntry te join InvoiceProjectTasks ipt on (te.projectTaskId = ipt.projectTaskId) group by te.projectTaskId;
-  UPDATE Invoice i SET totalAmount = total  WHERE i.projectId = :NEW.projectId;
+select sum(p.hourRate*(TO_DATE(te.endDate, 'DD.MM.YYYY') - TO_DATE(te.startDate, 'DD.MM.YYYY')) * 24) INTO total FROM TaskEntry te join ProjectTask pt on te.projecttaskid = pt.projecttaskid join Project p on (p.projectid = pt.projectid) where te.projectTaskId = :NEW.projectTaskId;
+  UPDATE Invoice i SET totalAmount = total  WHERE i.invoiceid = :NEW.invoiceid;
 END;
 /
